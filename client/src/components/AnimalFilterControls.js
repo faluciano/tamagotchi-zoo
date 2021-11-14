@@ -13,7 +13,7 @@ import SpeciesDropdown from './AnimalFilterControls/SpeciesDropdown';
 const AnimalFilterControls = ({ id, userAnimal, setUserAnimal, species }) => {
     const { isAuthenticated, user } = useAuth0();
 
-    const [zipCode, setZipCode] = useState(0);
+    const [zipCode, setZipCode] = useState('07047');
     const [selectedSpecies, setSelectedSpecies] = useState(species[0]);
 
     const render = isAuthenticated && user && userAnimal === undefined;

@@ -11,7 +11,7 @@ const ZipCodeInput = ({ zipCode, setZipCode }) => {
     return (
         <InputGroup>
             <InputGroup.Text>Zip Code</InputGroup.Text>
-            <Form.Control type='number' value={zipCode} placeholder="Your Postal Code" onChange={handleChange} />
+            <Form.Control type='number' value={zipCode} placeholder='07047' onChange={handleChange} />
         </InputGroup>
     );
 }

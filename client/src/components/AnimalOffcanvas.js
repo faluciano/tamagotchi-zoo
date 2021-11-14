@@ -17,6 +17,8 @@ const AnimalOffcanvas = ({ offcanvasShow, setOffcanvasShow, animal }) => {
         </Carousel.Item>
     );
 
+    console.log(animal);
+
     return (
         <Offcanvas show={offcanvasShow} onHide={handleClose}>
             <Offcanvas.Header closeButton>
@@ -37,7 +39,7 @@ const AnimalOffcanvas = ({ offcanvasShow, setOffcanvasShow, animal }) => {
                     {animal?.contact?.address?.address2 !== null && <ListGroup.Item>Address Line 2: {animal?.contact?.address?.address2}</ListGroup.Item>}
                     {animal?.contact?.address?.city !== null && <ListGroup.Item>City: {animal?.contact?.address?.city}</ListGroup.Item>}
                     {animal?.contact?.address?.state !== null && <ListGroup.Item>State: {animal?.contact?.address?.state}</ListGroup.Item>}
-                    {animal?.contact?.address?.postcode !== null && <ListGroup.Item>Zip Code: {animal?.contact?.address?.postcode.split('-')[0].substring(1)}</ListGroup.Item>}
+                    {animal?.contact?.address?.postcode !== null && <ListGroup.Item>Zip Code: {animal?.contact?.address?.postcode.split('-')[0]}</ListGroup.Item>}
                     {animal?.contact?.address?.country !== null && <ListGroup.Item>Country: {animal?.contact?.address?.country}</ListGroup.Item>}
                     {animal?.contact?.email !== null && <ListGroup.Item>Email: {animal?.contact?.email}</ListGroup.Item>}
                     {animal?.contact?.phone !== null && <ListGroup.Item>Phone: {animal?.contact?.phone}</ListGroup.Item>}
