@@ -20,7 +20,8 @@ async function createAnimal(id, postal, preference) {
     }
     const user = await UserModel.find({ "id": id });
     if (user.length !== 0){
-        await UserModel.updateOne({"id": id}, { $set: { 'animal': animal } });
+        user.animal = animal
+        await UserModel.updateOne({"id": id}, { $set: user });
     }
     else{
         const user1 = new UserModel(use);
