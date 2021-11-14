@@ -17,8 +17,6 @@ const AnimalOffcanvas = ({ offcanvasShow, setOffcanvasShow, animal }) => {
         </Carousel.Item>
     );
 
-    console.log(animal);
-
     return (
         <Offcanvas show={offcanvasShow} onHide={handleClose}>
             <Offcanvas.Header closeButton>

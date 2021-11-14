@@ -11,6 +11,7 @@ import Header from './components/Header';
 import AnimalFilterControls from './components/AnimalFilterControls';
 import AnimalCard from './components/AnimalCard';
 import AnimalInteractControls from './components/AnimalInteractControls';
+import ButtonAnimalReroll from './components/ButtonAnimalReroll';
 import AnimalOffcanvas from './components/AnimalOffcanvas';
 
 import { useAuth0 } from '@auth0/auth0-react';
@@ -55,7 +56,11 @@ const App = () => {
     getSpeciesFromDB();
   }, []);
 
+  const [zipCode, setZipCode] = useState('07047');
+  const [selectedSpecies, setSelectedSpecies] = useState(species[0]);
+
   const [offcanvasShow, setOffcanvasShow] = useState(false);
+
 
   if (isLoading) return <div>Loading ...</div>
 
@@ -64,6 +69,10 @@ const App = () => {
       <Header />
 
       <AnimalFilterControls
+        zipCode={zipCode}
+        setZipCode={setZipCode}
+        selectedSpecies={selectedSpecies}
+        setSelectedSpecies={setSelectedSpecies}
         id={getUserID()}
         userAnimal={userAnimal}
         setUserAnimal={setUserAnimal}
@@ -71,9 +80,19 @@ const App = () => {
 
       <Container className='p-4'>
         <AnimalCard
-        setOffcanvasShow={setOffcanvasShow}
-        animal={userAnimal} />
+          id={getUserID()}
+          setOffcanvasShow={setOffcanvasShow}
+          animal={userAnimal} />
         <AnimalInteractControls userAnimal={userAnimal} id={getUserID()} />
+      </Container>
+
+      <Container>
+        <ButtonAnimalReroll
+          id={getUserID()}
+          zipCode={zipCode}
+          selectedSpecies={selectedSpecies}
+          userAnimal={userAnimal} setUserAnimal={setUserAnimal} />
+
       </Container>
 
       <AnimalOffcanvas

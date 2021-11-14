@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     Container,
     Button,
@@ -10,11 +9,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import ZipCodeInput from './AnimalFilterControls/ZipCodeInput';
 import SpeciesDropdown from './AnimalFilterControls/SpeciesDropdown';
 
-const AnimalFilterControls = ({ id, userAnimal, setUserAnimal, species }) => {
+const AnimalFilterControls = ({ zipCode, setZipCode, selectedSpecies, setSelectedSpecies, id, userAnimal, setUserAnimal, species }) => {
     const { isAuthenticated, user } = useAuth0();
-
-    const [zipCode, setZipCode] = useState('07047');
-    const [selectedSpecies, setSelectedSpecies] = useState(species[0]);
 
     const render = isAuthenticated && user && userAnimal === undefined;
 
