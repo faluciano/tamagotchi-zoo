@@ -62,9 +62,11 @@ var UserSchema = new mongoose.Schema({
         "sleepiness": {
             "type": "Number",
             "default": 100
-        } 
+        },
+        "color": {
+            "type": "String"
+        }
     },
-    postal: String
 });
 
 const UserModel = mongoose.model('User',UserSchema,'users');

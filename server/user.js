@@ -9,9 +9,11 @@ const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 // Creates an animal for user
 async function createAnimal(id, postal, preference) {
     const animal = await random(postal, preference);
+    const color = Math.floor(Math.random()*16777215).toString(16);
+    animal.color = color;
     const use = {
         "id": id,
-        "animal": animal
+        "animal": animal,
     }
     const user1 = new UserModel(use);
     user1.save()
