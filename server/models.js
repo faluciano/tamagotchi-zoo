@@ -1,27 +1,67 @@
 import mongoose from "mongoose";
 
 var UserSchema = new mongoose.Schema({
-    id : String,
+    id : {
+        "type": "String"
+    },
     animal: {
-        name: String,
-        species: String,
-        age: String,
-        photos: [],
-        hunger: {
-            type: Number,
-            default: 100
+        "name": {
+            "type": "String"
         },
-        happiness: {
-            type: Number,
-            default: 100
+        "species": {
+            "type": "String"
         },
-        cleanliness: {
-            type: Number,
-            default: 100
+        "age": {
+            "type": "String"
         },
-        sleepiness: {
-            type: Number,
-            default: 100
+        "contact": {
+            "email": {
+                "type": "String"
+            },
+            "phone": {
+                "type": "String"
+            },
+            "address": {
+                "address1": {
+                "type": "Mixed"
+                },
+                "address2": {
+                "type": "Mixed"
+                },
+                "city": {
+                "type": "String"
+                },
+                "state": {
+                "type": "String"
+                },
+                "postcode": {
+                "type": "Date"
+                },
+                "country": {
+                "type": "String"
+                }
+            }
+        },
+        "photos": {
+            "type": [
+                "String"
+            ]
+        },
+        "hunger": {
+            "type": "Number",
+            "default": 100
+        },
+        "happiness": {
+            "type": "Number",
+            "default": 100
+        },
+        "cleanliness": {
+            "type": "Number",
+            "default": 100
+        },
+        "sleepiness": {
+            "type": "Number",
+            "default": 100
         } 
     },
     postal: String

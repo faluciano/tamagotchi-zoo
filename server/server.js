@@ -23,6 +23,12 @@ db.once("open", function () {
   console.log("Connected to db successfully");
 });
 
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+)
+
 app.use( '/', animal_routes);
 app.use('/',user_routes);
 

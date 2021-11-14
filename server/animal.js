@@ -94,9 +94,9 @@ animal_routes.get('/getSpecies', async (req, res)=>{
 });
 
 // Returns a random animal
-async function random(postal){
+async function random(postal,preference){
     const token = await getToken();
-    const animals = await getAnimals(token,postal);
+    const animals = await getAnimals(token,postal,preference);
     return filterAnimals(animals)[Math.floor(Math.random()*animals.length)];
 };
 
