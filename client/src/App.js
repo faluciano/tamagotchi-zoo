@@ -62,7 +62,7 @@ const App = () => {
 
       <Container className='p-4'>
         <AnimalCard animal={userAnimal} />
-        <AnimalInteractControls userAnimal={userAnimal} />
+        <AnimalInteractControls userAnimal={userAnimal} id={getUserID()}/>
       </Container>
 
 
