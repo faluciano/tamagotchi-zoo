@@ -45,6 +45,7 @@ user_routes.get('/login', async (req, res) => {
     return res.json(user[0].animal);
 });
 
+// Feeds animal and increases hunger, decreases cleanliness
 user_routes.put('/feed', async (req,res) => {
     const id = req.query.id;
     const query = {"id":id};
@@ -56,6 +57,39 @@ user_routes.put('/feed', async (req,res) => {
 
     animal.hunger = clamp(animal.hunger+60,0,100);
     animal.cleanliness = clamp(animal.cleanliness-10,0,100);
+
+    await UserModel.updateOne(query,{$set :{'animal':animal}});
+    return res.json({"accepted":true});
+});
+
+// Pets animal and increases hapiness, decreases hunger
+user_routes.put('/pet', async (req,res) => {
+    const id = req.query.id;
+    const query = {"id":id};
+    let user = await UserModel.find(query);
+    let animal = user[0].animal;
+    if (animal.happiness>=80){
+        return res.json({"accepted":false})
+    }
+
+    animal.happiness = clamp(animal.happiness+60,0,100);
+    animal.hunger = clamp(animal.hunger-10,0,100);
+
+    await UserModel.updateOne(query,{$set :{'animal':animal}});
+    return res.json({"accepted":true});
+});
+
+user_routes.put('/clean', async (req,res) => {
+    const id = req.query.id;
+    const query = {"id":id};
+    let user = await UserModel.find(query);
+    let animal = user[0].animal;
+
+    if (animal.cleanliness===100){
+        return res.json({"accepted":false})
+    }
+
+    animal.cleanliness = 100;
 
     await UserModel.updateOne(query,{$set :{'animal':animal}});
     return res.json({"accepted":true});
