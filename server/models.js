@@ -67,4 +67,6 @@ var UserSchema = new mongoose.Schema({
     postal: String
 });
 
-export default UserSchema;
+const UserModel = mongoose.model('User',UserSchema,'users');
+
+export default UserModel;

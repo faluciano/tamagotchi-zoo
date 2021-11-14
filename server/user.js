@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import mongoose from 'mongoose';
 var user_routes = Router();
-import UserSchema from './models.js';
+import UserModel from './models.js';
 import { random } from './animal.js';
 
 // Creates an animal for user
@@ -11,8 +10,7 @@ async function createAnimal(id, postal, preference){
         "id":id,
         "animal":animal
     }
-    var User = mongoose.model('User',UserSchema,'users');
-    const user1 = new User(use);
+    const user1 = new UserModel(use);
     user1.save()
     return animal;
 }
@@ -24,5 +22,15 @@ user_routes.post('/createAnimal', async (req,res)=>{
     const animal = await createAnimal(req.body.id,req.body.postal, req.body.name);
     return res.json(animal);
 });
+
+// Returns a users animal or empty if the user doesn't exist
+user_routes.get('/getAnimal', async (req,res)=>{
+    const id = req.query.id;
+    const user = await UserModel.find({"id":id});
+    if (user === []){
+        return res.json({});
+    }
+    return res.json(user[0]);
+})
 
 export default user_routes;
