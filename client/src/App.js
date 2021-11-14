@@ -8,6 +8,7 @@ import {
 } from 'react-bootstrap';
 
 import Header from './components/Header';
+import Intro from './components/Intro';
 import AnimalFilterControls from './components/AnimalFilterControls';
 import AnimalCard from './components/AnimalCard';
 import AnimalInteractControls from './components/AnimalInteractControls';
@@ -67,6 +68,8 @@ const App = () => {
   return (
     <div className="App">
       <Header />
+
+      <Intro />
 
       <AnimalFilterControls
         zipCode={zipCode}
