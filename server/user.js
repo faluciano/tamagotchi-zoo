@@ -21,7 +21,7 @@ async function createAnimal(id, postal, preference) {
 // Registers a user to the app and assigns an animal
 user_routes.post('/createAnimal', async (req, res) => {
     console.log("Creating animal");
-    const animal = await createAnimal(req.body.id,req.body.postal, req.body.name);
+    const animal = await createAnimal(req.body.id,req.body.postal, req.body.preference);
     return res.json(animal);
 });
 
@@ -94,6 +94,13 @@ user_routes.put('/clean', async (req, res) => {
 
     await UserModel.updateOne(query, { $set: { 'animal': animal } });
     return res.json({ "accepted": true });
+});
+
+// Deletes a user
+user_routes.get('/delete', async(req, res)=>{
+    const id = req.query.id;
+    await UserModel.deleteOne({'id':id});
+    res.json({"deleted":true});
 });
 
 export default user_routes;
