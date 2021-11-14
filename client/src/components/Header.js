@@ -2,11 +2,11 @@ import {
     Container,
 } from 'react-bootstrap'
 
-import Logo from './Header/Logo';
-import Title from './Header/Title';
-import Profile from './Header/Profile';
-import LoginButton from './Header/LoginButton';
-import LogoutButton from './Header/LogoutButton';
+import Logo from './header/Logo';
+import Title from './header/Title';
+import Profile from './header/Profile';
+import LoginButton from './header/LoginButton';
+import LogoutButton from './header/LogoutButton';
 
 
 const Header = () => {
