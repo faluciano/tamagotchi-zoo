@@ -79,6 +79,7 @@ user_routes.put('/pet', async (req,res) => {
     return res.json({"accepted":true});
 });
 
+// Cleans animal and increases cleanliness to max
 user_routes.put('/clean', async (req,res) => {
     const id = req.query.id;
     const query = {"id":id};
