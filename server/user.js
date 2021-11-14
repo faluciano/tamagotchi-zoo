@@ -16,6 +16,7 @@ async function createAnimal(id, postal, preference) {
     const use = {
         "id": id,
         "animal": animal,
+        "orignal_name": animal.name
     }
     const user = await UserModel.find({ "id": id });
     if (user.length !== 0){
@@ -112,5 +113,14 @@ user_routes.get('/delete', async(req, res)=>{
     await UserModel.deleteOne({'id':id});
     res.json({"deleted":true});
 });
+
+user_routes.put('/changeName', async(req,res)=>{
+    const id = req.query.id;
+    const name = req.query.name;
+    let user = await UserModel.find({"id":id});
+    user[0].animal.name = name
+    await UserModel.updateOne({"id":id}, { $set: { 'animal': user[0].animal } });
+    res.json({"accepted":"named changed to "+name})
+})
 
 export default user_routes;

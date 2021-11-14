@@ -5,6 +5,9 @@ var UserSchema = new mongoose.Schema({
         "type": "String"
     },
     animal: {
+        "original_type": {
+            "type": "String"
+        },
         "name": {
             "type": "String"
         },
