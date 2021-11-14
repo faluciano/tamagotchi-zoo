@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Title = () => {
     return (
         <h1 className='text-nowrap'>The Petting Zoo</h1>

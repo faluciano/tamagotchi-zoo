@@ -1,13 +1,12 @@
-import React from 'react';
 import {
+    Container,
     Row,
     Col,
     Button,
     ButtonToolbar,
-    Container,
 } from 'react-bootstrap'
 
-const Controls = () => {
+const AnimalInteractControls = () => {
     return (
         <Container fluid>
             <ButtonToolbar>
@@ -27,4 +26,4 @@ const Controls = () => {
     );
 }
 
-export default Controls;
+export default AnimalInteractControls;
