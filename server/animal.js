@@ -63,6 +63,7 @@ function filterAnimals(animals){
             'species': animal.species,
             'age': animal.age,
             'contact': animal.contact,
+            'gender':animal.gender,
             'photos': animal.photos.map(photo=>photo.full)
         }
     })

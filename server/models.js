@@ -14,6 +14,9 @@ var UserSchema = new mongoose.Schema({
         "age": {
             "type": "String"
         },
+        "gender": {
+            "type": "String"
+        },
         "contact": {
             "email": {
                 "type": "String"
