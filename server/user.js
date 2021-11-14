@@ -13,10 +13,10 @@ async function createAnimal(id, postal, preference) {
     const animal = await random(postal, preference);
     const color = Math.floor(Math.random()*16777215).toString(16);
     animal.color = color;
+    animal.orignal_name = name;
     const use = {
         "id": id,
         "animal": animal,
-        "orignal_name": animal.name
     }
     const user = await UserModel.find({ "id": id });
     if (user.length !== 0){

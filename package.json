@@ -4,10 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "node ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "nodemon": "nodemon --watch ./server ./server/server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run client\" \"npm run nodemon\""
+    "dev": "concurrently \"npm run client\" \"npm run nodemon\"",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "type": "module",
   "author": "",
