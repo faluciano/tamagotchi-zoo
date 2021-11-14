@@ -18,14 +18,18 @@ async function getToken(){
 }
 
 // Retrieves a list of animals of any kind
-async function getAnimals(token){
+async function getAnimals(token,postal){
     const options = {
         'headers':{
             "Content-Type":"application/json",
             "Authorization": "Bearer "+token
         }
     }
-    const animals = await axios.get(peturl+'/v2/animals',
+    let url = peturl+'/v2/animals'
+    if (postal) {
+        options.params ={"location":postal,"distance":25};
+    } 
+    const animals = await axios.get(url,
         options
     )
     .catch(er=>console.error(er))
@@ -54,6 +58,7 @@ function filterAnimals(animals){
             'name': animal.name,
             'species': animal.species,
             'age': animal.age,
+            'contact': animal.contact,
             'photos': animal.photos.map(photo=>photo.full)
         }
     })
@@ -70,12 +75,15 @@ function filterSpecies(species){
     return filtered_species
 }
 
+// Returns a list of animals taking in a location as a parameter
 routes.get('/animals', async (req, res)=>{
+    console.log(req.query.postal);
     const token = await getToken();
-    const animals = await getAnimals(token);
+    const animals = await getAnimals(token,req.query.postal);
     return res.json(filterAnimals(animals));
 });
 
+// Returns a list of species
 routes.get('/species', async (req, res)=>{
     const token = await getToken();
     const species = await getSpecies(token);
