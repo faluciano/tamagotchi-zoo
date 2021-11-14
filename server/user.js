@@ -8,6 +8,8 @@ const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 // Creates an animal for user
 async function createAnimal(id, postal, preference) {
+    
+    
     const animal = await random(postal, preference);
     const color = Math.floor(Math.random()*16777215).toString(16);
     animal.color = color;
@@ -15,8 +17,14 @@ async function createAnimal(id, postal, preference) {
         "id": id,
         "animal": animal,
     }
-    const user1 = new UserModel(use);
-    user1.save()
+    const user = await UserModel.find({ "id": id });
+    if (user.length !== 0){
+        await UserModel.updateOne({"id": id}, { $set: { 'animal': animal } });
+    }
+    else{
+        const user1 = new UserModel(use);
+        user1.save()
+    }
     return animal;
 }
 
