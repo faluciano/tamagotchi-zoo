@@ -12,7 +12,11 @@ const AnimalCard = ({ setOffcanvasShow, animal }) => {
         const map = {
             'dog': dog,
             'cat': cat,
-            'bird': bird
+            'bird': bird,
+            'rabbit': cat,
+            'horse': dog,
+            'bardyard': bird,
+            'scales, fins & other': bird
         }
         return map[animal.species.toLowerCase()];
     }
