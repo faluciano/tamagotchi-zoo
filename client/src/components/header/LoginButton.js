@@ -7,7 +7,7 @@ const LoginButton = () => {
 
     return (
         !isAuthenticated && !user && (
-            <Button onClick={() => loginWithRedirect()}>
+            <Button className='text-nowrap' style={{ marginLeft: 'auto' }} onClick={() => loginWithRedirect()}>
                 Log In
             </Button>
         )

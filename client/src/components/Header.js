@@ -1,27 +1,26 @@
 import React from 'react';
 import {
     Container,
-    Row,
-    Col,
 } from 'react-bootstrap'
 
-import Profile from './Profile';
-import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
+import Logo from './header/Logo';
+import Title from './header/Title';
+import Profile from './header/Profile';
+import LoginButton from './header/LoginButton';
+import LogoutButton from './header/LogoutButton';
+
 
 const Header = () => {
     return (
-        <header>
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <Profile />
-                    </Col>
-                    <Col>
-                        <LoginButton />
-                        <LogoutButton />
-                    </Col>
-                </Row>
+        <header className="my-1">
+            <Container className='d-flex align-items-center flex-nowrap my-3'>
+                <Logo />
+                <Title />
+            </Container>
+            <Container className='d-flex align-items-center flex-nowrap my-4'>
+                <Profile />
+                <LoginButton />
+                <LogoutButton />
             </Container>
         </header>
     );

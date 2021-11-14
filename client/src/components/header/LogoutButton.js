@@ -7,7 +7,7 @@ const LogoutButton = () => {
 
     return (
         isAuthenticated && user && (
-            <Button onClick={() => logout({
+            <Button className='text-nowrap' onClick={() => logout({
                 returnTo: window.location.origin,
             })}>
                 Log Out
