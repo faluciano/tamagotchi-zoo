@@ -15,7 +15,6 @@ async function createAnimal(id, postal, preference){
     return animal;
 }
 
-
 // Registers a user to the app and assigns an animal
 user_routes.post('/createAnimal', async (req,res)=>{
     console.log("Creating animal");
@@ -27,10 +26,20 @@ user_routes.post('/createAnimal', async (req,res)=>{
 user_routes.get('/getAnimal', async (req,res)=>{
     const id = req.query.id;
     const user = await UserModel.find({"id":id});
+    // if (user === []){
+    //     return res.json({});
+    // }
+    return res.json(user[0].animal);
+});
+
+// Checks if a user exists in db and returns their animal if they do
+user_routes.get('/login', async (req, res) => {
+    const id = req.query.id;
+    const user = await UserModel.find({"id":id});
     if (user === []){
         return res.json({});
     }
-    return res.json(user[0]);
-})
+    return res.json(user[0].animal);
+});
 
 export default user_routes;
