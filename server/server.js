@@ -1,10 +1,10 @@
-require('dotenv').config();
-
-const express = require('express');
-const mongoose = require('mongoose');
+import { config } from 'dotenv';
+config();
+import express from 'express';
+import mongoose from 'mongoose';
 const app = express();
-const animal = require('./animal');
-const user = require('./user');
+import {animal_routes} from './animal.js';
+import user_routes from './user.js';
 
 const port = process.env.PORT || 3001;
 const MONGO = process.env.MONGO;
@@ -23,9 +23,11 @@ db.once("open", function () {
   console.log("Connected to db successfully");
 });
 
-app.use( '/', animal);
-app.use('/',user);
+app.use( '/', animal_routes);
+app.use('/',user_routes);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+export default db;

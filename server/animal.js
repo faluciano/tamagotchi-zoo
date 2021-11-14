@@ -1,8 +1,12 @@
-const routes = require('express').Router();
+import {Router} from 'express';
+import { config } from 'dotenv';
+config();
 const PETID = process.env.PETID;
 const PETSECRET = process.env.PETSECRET;
-const axios = require('axios');
+import axios from 'axios';
 const peturl = "https://api.petfinder.com";
+
+var animal_routes = Router();
 
 // Generates a token for petfinder api
 async function getToken(){
@@ -18,7 +22,7 @@ async function getToken(){
 }
 
 // Retrieves a list of animals of any kind
-async function getAnimals(token,postal){
+async function getAnimals(token,postal,preference){
     const options = {
         'headers':{
             "Content-Type":"application/json",
@@ -27,7 +31,7 @@ async function getAnimals(token,postal){
     }
     let url = peturl+'/v2/animals'
     if (postal) {
-        options.params ={"location":postal,"distance":25};
+        options.params ={"location":postal,"distance":25,"type":preference};
     } 
     const animals = await axios.get(url,
         options
@@ -53,7 +57,7 @@ async function getSpecies(token){
 
 // Filters out the uneeded data from a list of animals
 function filterAnimals(animals){
-    filtered_animals = animals.map(animal=>{
+    const filtered_animals = animals.map(animal=>{
         return {
             'name': animal.name,
             'species': animal.species,
@@ -67,7 +71,7 @@ function filterAnimals(animals){
 
 // Filters out the uneeded data from a list of species
 function filterSpecies(species){
-    filtered_species = species.map(specie=>{
+    const filtered_species = species.map(specie=>{
         return {
             'name': specie.name,
         }
@@ -76,18 +80,24 @@ function filterSpecies(species){
 }
 
 // Returns a list of animals taking in a location as a parameter
-routes.get('/animals', async (req, res)=>{
-    console.log(req.query.postal);
+animal_routes.get('/animals', async (req, res)=>{
     const token = await getToken();
-    const animals = await getAnimals(token,req.query.postal);
+    const animals = await getAnimals(token,req.query.postal,req.query.preference);
     return res.json(filterAnimals(animals));
 });
 
 // Returns a list of species
-routes.get('/species', async (req, res)=>{
+animal_routes.get('/getSpecies', async (req, res)=>{
     const token = await getToken();
     const species = await getSpecies(token);
     return res.json(filterSpecies(species));
 });
 
-module.exports = routes;
+// Returns a random animal
+async function random(postal){
+    const token = await getToken();
+    const animals = await getAnimals(token,postal);
+    return filterAnimals(animals)[Math.floor(Math.random()*animals.length)];
+};
+
+export { animal_routes, random}
