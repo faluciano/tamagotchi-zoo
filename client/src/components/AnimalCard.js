@@ -1,22 +1,24 @@
 import {
     Card,
 } from 'react-bootstrap'
-//import dog from '../image/dog_stand_look4.gif'
+import dog from '../image/dog_stand_lookx4.gif';
+import cat from '../image/catwalkx4.gif';
+import bird from '../image/chickenprofilepeckx4.gif';
 
 const AnimalCard = ({ animal }) => {
     const render = animal !== undefined;
-    // function image(){
-    //     const map = {
-    //         'dog': dog,
-    //         'cat': '/cat/cat_stand_catrunx2.gif',
-    //         'bird': '/chicken/chickenfrontwalkx4.gif'
-    //     }
-    //     return map[animal.species.toLowerCase()];
-    // }
+    function image(){
+        const map = {
+            'dog': dog,
+            'cat': cat,
+            'bird': bird
+        }
+        return map[animal.species.toLowerCase()];
+    }
     return (
         render && (
             <Card className='mx-auto' style={{ maxWidth: '28rem' }}>
-                <Card.Img src="https://picsum.photos/200/100" />
+                <Card.Img src={image()} />
                 <Card.Body>
                     {animal?.name !== undefined && <Card.Title className='mt-2 mb-4 text-center'>Name: {animal?.name}</Card.Title>}
                     {animal?.gender !== undefined && <Card.Text style={{marginLeft:'2rem'}}>Gender: {animal?.gender}</Card.Text>}
