@@ -6,12 +6,13 @@ import {
 
 const Profile = () => {
     const { user, isAuthenticated } = useAuth0();
+    const name = user?.name.split('@')[0];
 
     return (
         isAuthenticated && user && (
             <Container className="d-flex align-items-center ml-auto">
-                <Image src={user.picture} className="d-inline" style={{ width: '3rem', marginRight: '1rem' }} />
-                <h2>{user.name}</h2>
+                <Image src={user.picture} className="d-inline rounded-circle" style={{ width: '3rem', marginRight: '1rem' }} />
+                <h2>{name}</h2>
             </Container >
         )
     );

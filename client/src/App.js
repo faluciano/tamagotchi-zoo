@@ -8,9 +8,10 @@ import {
 } from 'react-bootstrap';
 
 import Header from './components/Header';
+import AnimalFilterControls from './components/AnimalFilterControls';
 import AnimalCard from './components/AnimalCard';
 import AnimalInteractControls from './components/AnimalInteractControls';
-import AnimalFilterControls from './components/AnimalFilterControls';
+import AnimalOffcanvas from './components/AnimalOffcanvas';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -27,7 +28,7 @@ const App = () => {
     if (gotAnimalFlag) return;
     gotAnimalFlag = true;
 
-    fetch(`/login?id=${getUserID()}`)
+    fetch(`/login?id=${getUserID()}&time=${user.updated_at}`)
       .then(loginResponse => loginResponse.json())
       .then(loginJSON => {
         // If user had an animal
@@ -54,24 +55,31 @@ const App = () => {
     getSpeciesFromDB();
   }, []);
 
+  const [offcanvasShow, setOffcanvasShow] = useState(false);
+
   if (isLoading) return <div>Loading ...</div>
 
   return (
     <div className="App">
       <Header />
 
-      <Container className='p-4'>
-        <AnimalCard animal={userAnimal} />
-        <AnimalInteractControls userAnimal={userAnimal} id={getUserID()}/>
-      </Container>
-
-
-
       <AnimalFilterControls
         id={getUserID()}
         userAnimal={userAnimal}
         setUserAnimal={setUserAnimal}
         species={species} />
+
+      <Container className='p-4'>
+        <AnimalCard
+        setOffcanvasShow={setOffcanvasShow}
+        animal={userAnimal} />
+        <AnimalInteractControls userAnimal={userAnimal} id={getUserID()} />
+      </Container>
+
+      <AnimalOffcanvas
+        offcanvasShow={offcanvasShow}
+        setOffcanvasShow={setOffcanvasShow}
+        animal={userAnimal} />
     </div >
   );
 }
