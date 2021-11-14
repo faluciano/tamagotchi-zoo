@@ -14,50 +14,64 @@ import AnimalFilterControls from './components/AnimalFilterControls';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
-function App() {
+let gotAnimalFlag = false;
+
+const App = () => {
   const { isLoading, isAuthenticated, user } = useAuth0();
 
   // if (isLoading) return <div>Loading ...</div>
 
-  if (isAuthenticated && user) {
+  const getAnimal = () => {
+    if (gotAnimalFlag) return;
+    gotAnimalFlag = true;
+
     const id = user.sub.split('|')[1];
     fetch(`/login?id=${id}`)
       .then(loginResponse => loginResponse.json())
       .then(loginJSON => {
         // If an empty object returned
-        if (Object.keys(loginJSON).length === 0)
-        {
+        if (Object.keys(loginJSON).length === 0) {
           // Create an animal for this user
           fetch('/createAnimal', {
             method: 'POST',
-            body: JSON.stringify({
+            body: new URLSearchParams({
               id: id,
               postal: '07047',
-              preference: 'dog',
-            })
+              preference: 'Dog',
+            }).toString(),
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            }
           })
-          .then(createResponse => createResponse.json())
-          .then(createJSON => {
-            console.log('reached 1');
-            console.log(createJSON);
-          });
+            .then(createResponse => createResponse.json())
+            .then(createJSON => {
+              console.log('created new animal in DB');
+              console.log(createJSON);
+            });
         }
         // User had an animal
-        else
-        {
-          console.log('reached 2');
+        else {
+          console.log('animal found in DB');
           console.log(loginJSON);
         }
       });
+  };
+
+  if (isAuthenticated && user) {
+    getAnimal();
   }
 
   const [species, setSpecies] = useState(['Dog', 'Cat']);
 
-  useEffect(() => {
+  const getSpeciesFromDB = () => {
     fetch('/getSpecies')
       .then(response => response.json())
       .then(json => json.map(speciesObject => speciesObject.name))
       .then(arrSpecies => setSpecies(arrSpecies));
+  }
+
+  useEffect(() => {
+    getSpeciesFromDB();
   }, []);
 
 
