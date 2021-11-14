@@ -29,7 +29,7 @@ const AnimalOffcanvas = ({ offcanvasShow, setOffcanvasShow, animal }) => {
                         {carouselItems}
                     </Carousel>
                     {animal?.species !== null && <ListGroup.Item>Species: {animal?.species}</ListGroup.Item>}
-                    {animal?.name !== null && <ListGroup.Item>Real name: {animal?.original_name}</ListGroup.Item>}
+                    {animal?.originalName !== null && <ListGroup.Item>Real name: {animal?.originalName}</ListGroup.Item>}
                     {animal?.gender !== null && <ListGroup.Item>Gender: {animal?.gender}</ListGroup.Item>}
                     {animal?.species !== null && <ListGroup.Item>Species: {animal?.species}</ListGroup.Item>}
                     {animal?.age !== null && <ListGroup.Item>Age range: {animal?.age}</ListGroup.Item>}

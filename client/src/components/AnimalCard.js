@@ -17,8 +17,6 @@ const AnimalCard = ({ id, setOffcanvasShow, animal }) => {
         setReadOnly(!readOnly);
     }
 
-    console.log(animal);
-
     const changeAnimalName = () => {
         fetch(`/changeName?id=${id}&name=${name}`, {
             method: 'PUT',
@@ -48,7 +46,7 @@ const AnimalCard = ({ id, setOffcanvasShow, animal }) => {
             'bird': bird,
             'rabbit': cat,
             'horse': dog,
-            'bardyard': bird,
+            'barnyard': bird,
             'scales, fins & other': bird
         }
         return map[animal.species.toLowerCase()];

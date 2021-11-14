@@ -8,12 +8,10 @@ const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 // Creates an animal for user
 async function createAnimal(id, postal, preference) {
-    
-    
     const animal = await random(postal, preference);
     const color = Math.floor(Math.random()*16777215).toString(16);
     animal.color = color;
-    animal.orignal_name = animal.name;
+    animal.originalName = animal.name;
     const use = {
         "id": id,
         "animal": animal,
@@ -22,12 +20,21 @@ async function createAnimal(id, postal, preference) {
     if (user.length !== 0){
         user.animal = animal
         await UserModel.updateOne({"id": id}, { $set: user });
+        const userFound = await UserModel.find({ "id": id });
+        if (userFound.length === 0) {
+            return {};
+        }
+        return userFound[0].animal;
     }
     else{
         const user1 = new UserModel(use);
-        user1.save()
+        await user1.save();
+        const userFound = await UserModel.find({ "id": id });
+        if (userFound.length === 0) {
+            return {};
+        }
+        return userFound[0].animal;
     }
-    return animal;
 }
 
 // Registers a user to the app and assigns an animal
