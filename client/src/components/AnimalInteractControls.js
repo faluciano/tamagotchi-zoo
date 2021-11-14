@@ -6,23 +6,27 @@ import {
     ButtonToolbar,
 } from 'react-bootstrap'
 
-const AnimalInteractControls = () => {
+const AnimalInteractControls = ({ userAnimal }) => {
+    const render = userAnimal !== undefined;
+
     return (
-        <Container fluid>
-            <ButtonToolbar>
-                <Row xs={12} className='mx-auto'>
-                    <Col>
-                        <Button className='fs-4'>Pet</Button>
-                    </Col>
-                    <Col>
-                        <Button className='fs-4'>Feed</Button>
-                    </Col>
-                    <Col>
-                        <Button className='fs-4'>Clean</Button>
-                    </Col>
-                </Row>
-            </ButtonToolbar>
-        </Container>
+        render && (
+            <Container fluid className='py-4'>
+                <ButtonToolbar>
+                    <Row xs={12} className='mx-auto'>
+                        <Col>
+                            <Button className='fs-4'>Pet</Button>
+                        </Col>
+                        <Col>
+                            <Button className='fs-4'>Feed</Button>
+                        </Col>
+                        <Col>
+                            <Button className='fs-4'>Clean</Button>
+                        </Col>
+                    </Row>
+                </ButtonToolbar>
+            </Container>
+        )
     );
 }
 

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     InputGroup,
     Dropdown,
@@ -6,15 +5,14 @@ import {
 
 import SpeciesDropdownItem from './SpeciesDropdown/SpeciesDropdownItem';
 
-const SpeciesDropdown = ({ species }) => {
-    const [selectedValue, setSelectedValue] = useState(species.length > 0 ? species[0] : '');
+const SpeciesDropdown = ({ selectedSpecies, setSelectedSpecies, species }) => {
 
     const dropdownItems = species.map((s, i) =>
         <SpeciesDropdownItem species={s} key={i} />
     );
 
     const handleSelect = (e) => {
-        setSelectedValue(e);
+        setSelectedSpecies(e);
     };
 
     return (
@@ -22,7 +20,7 @@ const SpeciesDropdown = ({ species }) => {
             <InputGroup.Text>Species</InputGroup.Text>
             <Dropdown title='Species Dropdown' onSelect={handleSelect}>
                 <Dropdown.Toggle>
-                    {selectedValue}
+                    {selectedSpecies}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {dropdownItems}
@@ -30,10 +28,6 @@ const SpeciesDropdown = ({ species }) => {
             </Dropdown>
         </InputGroup>
     );
-}
-
-SpeciesDropdown.defaultProps = {
-    species: ['Dog', 'Cat'],
 }
 
 export default SpeciesDropdown;

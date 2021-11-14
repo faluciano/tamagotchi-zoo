@@ -3,16 +3,19 @@ import {
 } from 'react-bootstrap'
 
 const AnimalCard = ({ animal }) => {
+    const render = animal !== undefined;
+
     return (
-        <Card className='mx-auto' style={{ maxWidth: '32rem' }}>
-            <Card.Img src="https://picsum.photos/200/100" />
-            <Card.Body>
-                <Card.Title>Name: {animal?.name}</Card.Title>
-                <Card.Text>Species: {animal?.species}</Card.Text>
-                <Card.Text>Age: {animal?.age}</Card.Text>
-                <Card.Text>Contact Info: &lt;Contact Info Here&gt;</Card.Text>
-            </Card.Body>
-        </Card >
+        render && (
+            <Card className='mx-auto' style={{ maxWidth: '28rem' }}>
+                <Card.Img src="https://picsum.photos/200/100" />
+                <Card.Body>
+                    {animal?.name !== undefined && <Card.Title className='mt-2 mb-4 text-center'>Name: {animal?.name}</Card.Title>}
+                    {animal?.species !== undefined && <Card.Text style={{marginLeft:'2rem'}}>Species: {animal?.species}</Card.Text>}
+                    {animal?.age !== undefined && <Card.Text style={{marginLeft:'2rem'}}>Age: {animal?.age}</Card.Text>}
+                </Card.Body>
+            </Card >
+        )
     );
 }
 

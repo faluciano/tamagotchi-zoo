@@ -1,14 +1,17 @@
 import {
     InputGroup,
-    FormControl,
+    Form,
 } from 'react-bootstrap'
 
-const ZipCodeInput = ({ species }) => {
+const ZipCodeInput = ({ zipCode, setZipCode }) => {
+    const handleChange = (e) => {
+        setZipCode(e.target.value);
+    }
+
     return (
         <InputGroup>
             <InputGroup.Text>Zip Code</InputGroup.Text>
-            <FormControl placeholder="Your Postal Code">
-            </FormControl>
+            <Form.Control type='number' value={zipCode} placeholder="Your Postal Code" onChange={handleChange} />
         </InputGroup>
     );
 }

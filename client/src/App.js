@@ -19,46 +19,26 @@ let gotAnimalFlag = false;
 const App = () => {
   const { isLoading, isAuthenticated, user } = useAuth0();
 
-  // if (isLoading) return <div>Loading ...</div>
+  const getUserID = () => user?.sub.split('|')[1];
 
-  const getAnimal = () => {
+  const [userAnimal, setUserAnimal] = useState(undefined);
+
+  const getAnimalOnce = () => {
     if (gotAnimalFlag) return;
     gotAnimalFlag = true;
 
-    const id = user.sub.split('|')[1];
-    fetch(`/login?id=${id}`)
+    fetch(`/login?id=${getUserID()}`)
       .then(loginResponse => loginResponse.json())
       .then(loginJSON => {
-        // If an empty object returned
-        if (Object.keys(loginJSON).length === 0) {
-          // Create an animal for this user
-          fetch('/createAnimal', {
-            method: 'POST',
-            body: new URLSearchParams({
-              id: id,
-              postal: '07047',
-              preference: 'Dog',
-            }).toString(),
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            }
-          })
-            .then(createResponse => createResponse.json())
-            .then(createJSON => {
-              console.log('created new animal in DB');
-              console.log(createJSON);
-            });
-        }
-        // User had an animal
-        else {
-          console.log('animal found in DB');
-          console.log(loginJSON);
+        // If user had an animal
+        if (Object.keys(loginJSON).length > 0) {
+          setUserAnimal(loginJSON);
         }
       });
   };
 
   if (isAuthenticated && user) {
-    getAnimal();
+    getAnimalOnce();
   }
 
   const [species, setSpecies] = useState(['Dog', 'Cat']);
@@ -74,20 +54,24 @@ const App = () => {
     getSpeciesFromDB();
   }, []);
 
+  if (isLoading) return <div>Loading ...</div>
 
   return (
     <div className="App">
-
-
       <Header />
 
       <Container className='p-4'>
-        <AnimalCard />
+        <AnimalCard animal={userAnimal} />
+        <AnimalInteractControls userAnimal={userAnimal} />
       </Container>
 
-      <AnimalInteractControls />
 
-      <AnimalFilterControls species={species} />
+
+      <AnimalFilterControls
+        id={getUserID()}
+        userAnimal={userAnimal}
+        setUserAnimal={setUserAnimal}
+        species={species} />
     </div >
   );
 }
