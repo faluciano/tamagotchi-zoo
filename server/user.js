@@ -3,6 +3,9 @@ var user_routes = Router();
 import UserModel from './models.js';
 import { random } from './animal.js';
 
+
+const clamp = (num, min, max) => Math.min(Math.max(num,min),max);
+
 // Creates an animal for user
 async function createAnimal(id, postal, preference){
     const animal = await random(postal, preference);
@@ -36,10 +39,26 @@ user_routes.get('/getAnimal', async (req,res)=>{
 user_routes.get('/login', async (req, res) => {
     const id = req.query.id;
     const user = await UserModel.find({"id":id});
-    if (user === []){
+    if (user.length === 0){
         return res.json({});
     }
     return res.json(user[0].animal);
+});
+
+user_routes.put('/feed', async (req,res) => {
+    const id = req.query.id;
+    const query = {"id":id};
+    let user = await UserModel.find(query);
+    let animal = user[0].animal;
+    if (animal.hunger>=80){
+        return res.json({"accepted":false})
+    }
+
+    animal.hunger = clamp(animal.hunger+60,0,100);
+    animal.cleanliness = clamp(animal.cleanliness-10,0,100);
+
+    await UserModel.updateOne(query,{$set :{'animal':animal}});
+    return res.json({"accepted":true});
 });
 
 export default user_routes;
